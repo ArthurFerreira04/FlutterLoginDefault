@@ -16,6 +16,7 @@ dependencies:
   cloud_firestore: ^5.4.2
   dio: ^5.0.0
   carousel_slider: ^5.0.0
+  flutter_masked_text2: ^0.9.1
 
 dev_dependencies:
   flutter_test:

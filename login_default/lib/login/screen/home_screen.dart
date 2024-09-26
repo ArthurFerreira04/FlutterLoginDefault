@@ -49,7 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 'Upcoming',
                 style: TextStyle(color: Colors.white),
               ),
-              //Carrossel
               FutureBuilder(
                 future: upcomingMovies,
                 builder: (context, snapshot) {
@@ -81,7 +80,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
 
-              //Popular Movies
               const Text(
                 'Popular',
                 style: TextStyle(color: Colors.white),

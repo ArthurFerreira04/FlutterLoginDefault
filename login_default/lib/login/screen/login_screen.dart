@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_default/login/Widget/button.dart';
-import 'package:login_default/login/Widget/text_field.dart';
+import 'package:login_default/login/Widget/validators.dart';
 import 'package:login_default/login/screen/home_screen.dart';
 import 'package:login_default/login/screen/register_screen.dart';
 
@@ -14,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 class _SignupScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
 
   void _togglePasswordVisibility() {
@@ -29,7 +30,8 @@ class _SignupScreenState extends State<LoginScreen> {
       backgroundColor: const Color.fromRGBO(50, 50, 50, 1),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: SizedBox(
+          child: Form(
+            key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -53,7 +55,7 @@ class _SignupScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0,),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -69,17 +71,35 @@ class _SignupScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.only(top: 2),
                         child: SizedBox(
                           width: double.infinity,
-                          child: TextFieldInpute(
-                            textEditingController: emailController,
-                            hintText: "mail@email.com",
-                            icon: Icons.person,
+                          child: TextFormField(
+                            controller: emailController,
+                            validator: Validators.validateEmail,
+                            decoration: InputDecoration(
+                              hintText: "mail@email.com",
+                              prefixIcon: const Icon(
+                                Icons.person,
+                                color: Color(0xFF00FF00), 
+                              ),
+                              filled: true,
+                              fillColor: const Color(0xFFedf0f8),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    width: 2, color: Colors.blue),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-               Padding(
+                const SizedBox(height: 15),
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,22 +114,41 @@ class _SignupScreenState extends State<LoginScreen> {
                       ),
                       Stack(
                         children: [
-                          TextFieldInpute(
-                            textEditingController: passwordController,
-                            isPass: true,
-                            hintText: "**********",
-                            icon: Icons.lock,
+                          TextFormField(
+                            controller: passwordController,
                             obscureText: _obscureText,
+                            validator: Validators.validatePassword,
+                            decoration: InputDecoration(
+                              hintText: "**********",
+                              prefixIcon: const Icon(
+                                Icons.lock,
+                                color: Color(0xFF00FF00),
+                              ),
+                              filled: true,
+                              fillColor: const Color(0xFFedf0f8),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    width: 2, color: Colors.blue),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
                           ),
                           Positioned(
                             right: 10,
                             top: 0,
                             bottom: 0,
-                            child: Center(
+                            child: Align(
+                              alignment: Alignment.center,
                               child: IconButton(
                                 icon: Icon(
-                                  _obscureText ? Icons.visibility_off : Icons.visibility,
-                                  color: const Color(0xFF00FF00), // Ícone verde
+                                  _obscureText
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: const Color(0xFF00FF00), 
                                 ),
                                 onPressed: _togglePasswordVisibility,
                               ),
@@ -124,12 +163,14 @@ class _SignupScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.only(top: 10),
                   child: MyButton(
                     onTab: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomeScreen(), // Substitua pelo nome da sua tela de destino
-                        ),
-                      );
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
+                      }
                     },
                     text: "Login",
                   ),
