@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:login_default/login/Widget/button.dart';
+import 'package:login_default/login/Widget/navigation_menu.dart';
 import 'package:login_default/login/Widget/validators.dart';
-import 'package:login_default/login/screen/home_screen.dart';
-import 'package:login_default/login/screen/register_screen.dart';
+import 'package:login_default/recoverPassword/recover_password.dart';
+import 'package:login_default/register/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -78,7 +79,7 @@ class _SignupScreenState extends State<LoginScreen> {
                               hintText: "mail@email.com",
                               prefixIcon: const Icon(
                                 Icons.person,
-                                color: Color(0xFF00FF00), 
+                                color: Color(0xFF00FF00),
                               ),
                               filled: true,
                               fillColor: const Color(0xFFedf0f8),
@@ -148,7 +149,7 @@ class _SignupScreenState extends State<LoginScreen> {
                                   _obscureText
                                       ? Icons.visibility_off
                                       : Icons.visibility,
-                                  color: const Color(0xFF00FF00), 
+                                  color: const Color(0xFF00FF00),
                                 ),
                                 onPressed: _togglePasswordVisibility,
                               ),
@@ -167,7 +168,7 @@ class _SignupScreenState extends State<LoginScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
+                            builder: (context) => const BottomNavigation(),
                           ),
                         );
                       }
@@ -175,16 +176,26 @@ class _SignupScreenState extends State<LoginScreen> {
                     text: "Login",
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 35),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 35),
                   child: Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      "Esqueci minha senha",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: Colors.white,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RecoverPassword(), 
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        "Esqueci minha senha",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:login_default/Api/api.dart';
 import 'package:login_default/model/movie_model.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -27,17 +26,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12,
+      backgroundColor: const Color.fromRGBO(50, 50, 50, 1),
       appBar: AppBar(
         backgroundColor: Colors.black12,
         foregroundColor: const Color(0xFFFFFFFF),
-        leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+        leading: Padding(
+          padding: const EdgeInsets.all(0), 
+          child: Image.asset("images/Logo.png"), 
+        ),
         title: const Text("Movie Groove"),
         centerTitle: true,
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search_rounded)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -46,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Upcoming',
+                'Lançamentos',
                 style: TextStyle(color: Colors.white),
               ),
               FutureBuilder(
@@ -79,7 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
-
               const Text(
                 'Popular',
                 style: TextStyle(color: Colors.white),
@@ -124,9 +121,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
-
               const Text(
-                'Top Rated',
+                'Mais votados',
                 style: TextStyle(color: Colors.white),
               ),
               Container(
@@ -141,7 +137,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }
 
-                    final movies = snapshot.data as List<Movie>;;
+                    final movies = snapshot.data as List<Movie>;
+
                     return ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: movies.length,
@@ -176,4 +173,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
